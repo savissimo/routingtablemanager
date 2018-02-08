@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<RoutingTable>
+	<Route>
+		<Destination hostname="hungryinternal.ddns.net" />
+		<Gateway ipaddress="192.168.43.1" />
+		<Interface>5</Interface>
+	</Route>
+	<Route>
+		<Destination hostname="bid.igpmanager.com" />
+		<Gateway ipaddress="192.168.43.1" />
+		<Interface>5</Interface>
+	</Route>
+	<Route>
+		<Destination hostname="live1.igpmanager.com" />
+		<Gateway ipaddress="192.168.43.1" />
+		<Interface>5</Interface>
+	</Route>
+	<Route>
+		<Destination hostname="live2.igpmanager.com" />
+		<Gateway ipaddress="192.168.43.1" />
+		<Interface>5</Interface>
+	</Route>
+	<Route>
+		<Destination hostname="live3.igpmanager.com" />
+		<Gateway ipaddress="192.168.43.1" />
+		<Interface>5</Interface>
+	</Route>
+	<Route>
+		<Destination hostname="live4.igpmanager.com" />
+		<Gateway ipaddress="192.168.43.1" />
+		<Interface>5</Interface>
+	</Route>
+</RoutingTable>

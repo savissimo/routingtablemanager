@@ -1,0 +1,80 @@
+﻿<Window x:Class="Desktop.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Desktop.Views"
+		xmlns:rtm="clr-namespace:RoutingTableManager;assembly=RoutingTableManagerCore"
+        mc:Ignorable="d"
+		d:DataContext="{Binding Source={StaticResource Locator}, Path=Main}"
+		x:Name="w_form"
+        Title="Routing Table Manager" Height="350" Width="525">
+	<DockPanel>
+		<ToolBar DockPanel.Dock="Top">
+			<Button Command="{Binding Path=LoadRoutingTableFromFileCommand}">Load from file...</Button>
+			<Button Command="{Binding Path=SaveRoutingTableToFileCommand}">Save...</Button>
+			<Separator />
+			<Button Command="{Binding Path=UpdateDNSResolvedNamesCommand}">Resolve DNS names</Button>
+			<Button Command="{Binding Path=ApplyRoutingTableCommand}">Apply</Button>
+		</ToolBar>
+		
+		<Grid>
+			<Grid.RowDefinitions>
+				<RowDefinition />
+			</Grid.RowDefinitions>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="200" />
+				<ColumnDefinition />
+			</Grid.ColumnDefinitions>
+
+			<ListView Grid.Row="0" Grid.Column="0" x:Name="w_lstRoutes" ItemsSource="{Binding Path=Routes}">
+				<ListView.Resources>
+					<HierarchicalDataTemplate DataType="{x:Type rtm:Route}">
+						<StackPanel>
+							<TextBlock Text="{Binding Path=Destination}" />
+						</StackPanel>
+					</HierarchicalDataTemplate>
+				</ListView.Resources>
+			</ListView>
+
+			<Grid Grid.Row="0" Grid.Column="1" DataContext="{Binding ElementName=w_lstRoutes, Path=SelectedItem}">
+				<Grid.RowDefinitions>
+					<RowDefinition Height="Auto" />
+					<RowDefinition Height="Auto" />
+					<RowDefinition Height="Auto" />
+					<RowDefinition />
+				</Grid.RowDefinitions>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="120" />
+					<ColumnDefinition />
+				</Grid.ColumnDefinitions>
+
+				<TextBlock Grid.Row="0" Grid.Column="0" TextAlignment="Right">Destination</TextBlock>
+				<StackPanel Grid.Row="0" Grid.Column="1" Orientation="Vertical">
+					<TextBox Text="{Binding Path=Destination.Value, Mode=TwoWay}" />
+					<TextBlock Text="{Binding Path=Destination.IPAddress}"/>
+				</StackPanel>
+				
+				<TextBlock Grid.Row="1" Grid.Column="0" TextAlignment="Right">Gateway</TextBlock>
+				<StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical">
+					<TextBox Text="{Binding Path=Gateway.Value}" />
+					<TextBlock Text="{Binding Path=Gateway.IPAddress}"/>
+				</StackPanel>
+
+				<TextBlock Grid.Row="2" Grid.Column="0" TextAlignment="Right">Interface</TextBlock>
+				<!--<TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Path=Interface}" />-->
+				<ComboBox Grid.Row="2" Grid.Column="1" 
+						  ItemsSource="{Binding ElementName=w_form, Path=DataContext.AvailableInterfaces}" 
+						  SelectedValue="{Binding Path=Interface}" SelectedValuePath="Index">
+					<ComboBox.ItemTemplate>
+						<DataTemplate>
+							<StackPanel>
+								<TextBlock Text="{Binding Path=Name}" />
+							</StackPanel>
+						</DataTemplate>
+					</ComboBox.ItemTemplate>
+				</ComboBox>
+			</Grid>
+		</Grid>
+	</DockPanel>
+</Window>
